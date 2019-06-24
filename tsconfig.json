@@ -18,6 +18,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ng-drag-drop-plus": [
+        "dist/ng-drag-drop-plus"
+      ],
+      "ng-drag-drop-plus/*": [
+        "dist/ng-drag-drop-plus/*"
+      ]
+    }
   }
 }

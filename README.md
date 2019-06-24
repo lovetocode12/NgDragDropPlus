@@ -1,27 +1,124 @@
 # NgDragDropPlus
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3.
+![Work In Progress](/images/giphy.gif)
 
-## Development server
+Table of contents:
+* [Installation](#installation)
+* [How it works](#howitworks)
+* [Usage](#usage)
+* [License](#license)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## <a name="installation"></a>Installation
+```
+npm i ng-drag-drop-plus --save
+```
+## <a name="howitworks"></a>How it works
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Include the ng-calendar-plus module in your application at any place. The recommended way is to add forRoot initialization in the main app module.
 
-## Build
+```
+import { NgDragDropPlusModule } from 'ng-drag-drop-plus';
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+@NgModule({
+  declarations: [
+    AppComponent,
+  ],
+  imports: [
+    BrowserModule,
+    NgDragDropPlusModule.forRoot()
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
 
-## Running unit tests
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## <a name="usage"></a>Usage
+```
+import { Component } from '@angular/core';
+import { NgDragDropPlusService } from 'ng-drag-drop-plus';
+// import { NgDragDropPlusService } from 'projects/ng-drag-drop-plus/src/public-api';
 
-## Running end-to-end tests
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'NgDragDropPlus';
+  Available = 'Available';
+  Selected = 'Selected';
+  courses = [
+    {
+      name: 'Angular'
+    },
+    {
+      name: 'Node js'
+    },
+    {
+      name: 'Sql Server'
+    },
+    {
+      name: 'Docker'
+    },
+  ];
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+  selectedCourses = [];
 
-## Further help
+  constructor(private ngDragDropPlusService: NgDragDropPlusService) {
+    this.ngDragDropPlusService.onDragSub.subscribe((event) => this.dropCourse(event));
+  }
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+  dropCourse(event) {
+    const { data, source } = event;
+    if (source === this.Available) {
+      const index = this.courses.findIndex(c => c.name === data.name);
+      if (index !== -1) {
+        const course = this.courses.splice(index, 1);
+        this.selectedCourses.push(course[0]);
+      }
+    } else {
+      const index = this.selectedCourses.findIndex(c => c.name === data.name);
+      if (index !== -1) {
+        const course = this.selectedCourses.splice(index, 1);
+        this.courses.push(course[0]);
+      }
+    }
+  }
+}
+
+```
+example use directives like below html
+```
+<div droppable class="container">
+  <h2>Available Courses</h2>
+  <ul *ngFor="let course of courses">
+    <li draggable [dragData]="course" [dragSource]="Available" class="course-item">
+      {{course.name}}
+    </li>
+  </ul>
+</div>
+<div droppable class="container">
+  <h2>Dropped Courses</h2>
+  <ul *ngFor="let course of selectedCourses">
+    <li draggable [dragData]="course" [dragSource]="Selected" class="course-item">
+      {{course.name}}
+    </li>
+  </ul>
+</div>
+```
+# Events Available 
+
+## Subscribe to drop event
+```
+constructor(private ngDragDropPlusService: NgDragDropPlusService) {
+    this.ngDragDropPlusService.onDragSub.subscribe((event) => this.dropCourse(event));
+  }
+
+```
+
+## <a name="license">License
+Licensed under MIT
+
