@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 export class NgDragDropPlusService {
 
   public onDragSub = new Subject<any>();
+  public onDropSub = new Subject<any>();
   constructor() { }
 }
 

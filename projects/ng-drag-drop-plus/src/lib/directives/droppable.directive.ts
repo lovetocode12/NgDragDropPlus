@@ -20,6 +20,6 @@ export class DroppableDirective {
             data: obj.dragData,
             source: obj.dragSource
         })
-        this.dragDropPlusService.onDragSub.next(dragEvent);
+        this.dragDropPlusService.onDropSub.next(dragEvent);
     }
 }

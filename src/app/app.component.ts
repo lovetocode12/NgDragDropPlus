@@ -29,7 +29,7 @@ export class AppComponent {
   selectedCourses = [];
 
   constructor(private ngDragDropPlusService: NgDragDropPlusService) {
-    this.ngDragDropPlusService.onDragSub.subscribe((event) => this.dropCourse(event));
+    this.ngDragDropPlusService.onDropSub.subscribe((event) => this.dropCourse(event));
   }
 
 

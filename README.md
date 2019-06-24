@@ -67,7 +67,7 @@ export class AppComponent {
   selectedCourses = [];
 
   constructor(private ngDragDropPlusService: NgDragDropPlusService) {
-    this.ngDragDropPlusService.onDragSub.subscribe((event) => this.dropCourse(event));
+    this.ngDragDropPlusService.onDropSub.subscribe((event) => this.dropCourse(event));
   }
 
 
@@ -114,7 +114,7 @@ example use directives like below html
 ## Subscribe to drop event
 ```
 constructor(private ngDragDropPlusService: NgDragDropPlusService) {
-    this.ngDragDropPlusService.onDragSub.subscribe((event) => this.dropCourse(event));
+    this.ngDragDropPlusService.onDropSub.subscribe((event) => this.dropCourse(event));
   }
 
 ```
