@@ -13,8 +13,9 @@ export class NgDragDropPlusService {
 
 export class DraggedEvent {
   event = {};
-  data = {};
+  data: any;
   source = '';
+  destination = '';
   constructor(init?: Partial<DraggedEvent>) {
     Object.assign(this, init);
   }

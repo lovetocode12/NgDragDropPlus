@@ -71,15 +71,15 @@ export class AppComponent {
   }
 
 
-  dropCourse(event) {
-    const { data, source } = event;
-    if (source === this.Available) {
+  dropCourse(event: DraggedEvent) {
+    const { data, source, destination } = event;
+    if (source === this.Available && destination === this.Selected) {
       const index = this.courses.findIndex(c => c.name === data.name);
       if (index !== -1) {
         const course = this.courses.splice(index, 1);
         this.selectedCourses.push(course[0]);
       }
-    } else {
+    } else if (source === this.Selected && destination === this.Available) {
       const index = this.selectedCourses.findIndex(c => c.name === data.name);
       if (index !== -1) {
         const course = this.selectedCourses.splice(index, 1);
@@ -92,7 +92,7 @@ export class AppComponent {
 ```
 example use directives like below html
 ```
-<div droppable class="container">
+<div droppable [dragDestination]="Available" class="container">
   <h2>Available Courses</h2>
   <ul *ngFor="let course of courses">
     <li draggable [dragData]="course" [dragSource]="Available" class="course-item">
@@ -100,7 +100,7 @@ example use directives like below html
     </li>
   </ul>
 </div>
-<div droppable class="container">
+<div droppable [dragDestination]="Selected" class="container">
   <h2>Dropped Courses</h2>
   <ul *ngFor="let course of selectedCourses">
     <li draggable [dragData]="course" [dragSource]="Selected" class="course-item">

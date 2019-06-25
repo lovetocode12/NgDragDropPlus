@@ -1,10 +1,12 @@
-import { Directive, ElementRef, Renderer, HostListener } from '@angular/core';
+import { Directive, ElementRef, Renderer, HostListener, Input } from '@angular/core';
 import { NgDragDropPlusService, DraggedEvent } from '../services/ng-drag-drop-plus.service';
 @Directive({
     // tslint:disable-next-line: directive-selector
     selector: '[droppable]'
 })
 export class DroppableDirective {
+
+    @Input() dragDestination: string;
 
     constructor(private el: ElementRef, private dragDropPlusService: NgDragDropPlusService) {
     }
@@ -18,7 +20,8 @@ export class DroppableDirective {
         const dragEvent = new DraggedEvent({
             event,
             data: obj.dragData,
-            source: obj.dragSource
+            source: obj.dragSource,
+            destination: this.dragDestination
         })
         this.dragDropPlusService.onDropSub.next(dragEvent);
     }
